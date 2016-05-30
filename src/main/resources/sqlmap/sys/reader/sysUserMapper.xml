@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+    <resultMap id="sysUser" type="com.tj.sys.Entity.SysUser">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="loginName" column="login_name"/>
+        <result property="password" column="password"/>
+        <result property="roleIds" column="role_ids"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyDate" column="modify_date"/>
+    </resultMap>
+
+    <resultMap id="funcList" type="com.tj.sys.Entity.SysAuthFunc">
+        <result property="funcId" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="isMenu" column="is_menu"/>
+        <result property="funcName" column="func_name"/>
+        <result property="funcUrl" column="func_url"/>
+    </resultMap>
+</mapper>

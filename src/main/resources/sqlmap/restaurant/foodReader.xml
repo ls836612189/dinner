@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tj.restaurant.mapper.FoodMenuReader">
+    <sql id="querySql" >
+        select
+        id,food_name,sort_id,food_price,food_image,food_detail,food_effect,heigh_prize
+        from
+        t_tj_food
+    </sql>
+    <select id="queryFoodList" resultMap="rest.food">
+        <include refid="querySql"/>
+        where 1=1
+        <if test="foodVo.foodName != null">
+            AND food_name = #{foodVo.foodName}
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <select id="queryOrder" resultMap="rest.order">
+        select ORDER_ID,TABLE_NUMBER , order_state,account_receivable,sell_price
+        from food_order
+        where start_time <![CDATA[<]]> now() and start_time > date_format(now(),'%Y-%m-%d 00:00:00');
+    </select>
+    <select id="queryFoodListByType" resultMap="rest.food">
+        <include refid="querySql"/>
+        where 1=1
+        <if test="foodType != null">
+            AND sort_id = #{foodType}
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <select id="queryOrderDetail" resultMap="rest.orderDetail">
+        SELECT order_id,table_number,person_number,account_receivable,foods_count
+        from food_order WHERE 1=1
+        <if test="orderId != null">
+            AND order_id=#{orderId}
+        </if>
+    </select>
+    <select id="queryFoodDetail" resultMap="rest.foodDetail">
+        select f.id,f.food_name,f.food_price,d.food_count
+        from order_detail d INNER JOIN t_tj_food f on f.id=d.food_id WHERE 1=1
+        <if test="orderId != null">
+            AND d.order_id=#{orderId}
+        </if>
+    </select>
+</mapper>

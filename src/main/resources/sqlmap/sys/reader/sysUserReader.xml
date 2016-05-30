@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tj.sys.mapper.reader.SysUserReader">
+	<sql id="querySql">
+		SELECT
+		id,login_name,user_name,password,role_ids,create_time,modify_date
+		FROM
+		t_sys_user
+	</sql>
+
+	<select id="getSysUserByLoginName" resultMap="user.sysUser" parameterType="java.lang.String">
+		<include refid="querySql"/>
+		WHERE login_name = #{loginName}
+	</select>
+</mapper>
