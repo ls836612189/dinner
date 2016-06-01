@@ -1,10 +1,8 @@
 package com.tj.restaurant.service;
 
+import com.tj.core.utils.InitCommon;
 import com.tj.restaurant.bean.FoodVO;
-import com.tj.restaurant.entity.FoodDetail;
-import com.tj.restaurant.entity.FoodEntity;
-import com.tj.restaurant.entity.OrderDetail;
-import com.tj.restaurant.entity.OrderEntity;
+import com.tj.restaurant.entity.*;
 import com.tj.restaurant.mapper.FoodMenuReader;
 import com.tj.restaurant.mapper.FoodMenuWriter;
 import org.apache.log4j.Logger;
@@ -31,6 +29,9 @@ public class FoodMenuService {
             LOGGER.error("======FootMenuReader===查询异常!"+e.getMessage());
         }
         return null;
+    }
+    public FoodEntity queryFoodById(Integer id){
+        return foodReader.queryFoodById(id);
     }
     public void saveFood(FoodEntity entity){
         try {
@@ -60,5 +61,9 @@ public class FoodMenuService {
 
     public void saveOrder(Integer order){
         foodWriter.saveOrder(order);
+    }
+
+    public List<FoodType> queryFoodType(){
+        return foodReader.queryFoodType();
     }
 }

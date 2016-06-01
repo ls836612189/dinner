@@ -33,7 +33,11 @@
         <result property="name" column="food_name"/>
         <result property="price" column="food_price"/>
         <result property="foodCount" column="food_count"/>
+    </resultMap>
 
+    <resultMap id="foodType" type="com.tj.restaurant.entity.FoodType">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
     </resultMap>
 
 </mapper>

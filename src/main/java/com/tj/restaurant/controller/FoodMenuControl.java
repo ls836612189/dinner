@@ -6,6 +6,7 @@ import com.tj.restaurant.annotation.AutoPage;
 import com.tj.restaurant.bean.FoodVO;
 import com.tj.restaurant.bean.Response;
 import com.tj.restaurant.entity.FoodEntity;
+import com.tj.restaurant.entity.FoodType;
 import com.tj.restaurant.entity.OrderDetail;
 import com.tj.restaurant.entity.OrderEntity;
 import com.tj.restaurant.service.FoodMenuService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -42,8 +44,19 @@ public class FoodMenuControl {
         model.addAttribute("pageData",footList);
         return "/food_list";
     }
-
-    @RequestMapping("/food/saveNewFood")
+    @RequestMapping("/food/addNewFood")
+    public String addNewFood(Model model){
+        List<FoodType> foodTypes = foodService.queryFoodType();
+        model.addAttribute("foodType",foodTypes);
+        return "food_add";
+    }
+    @RequestMapping("/food/modifyFood")
+    public String modifyFood(Integer id,Model model){
+        FoodEntity entity = foodService.queryFoodById(id);
+        model.addAttribute("bean",entity);
+        return "food_modify";
+    }
+    @RequestMapping("/food/saveOrUpdateFood")
     public String saveNewFood(@RequestParam("foodName") String foodName, @RequestParam("foodType") String foodType,
                               @RequestParam("foodPrice") String foodPrice, @RequestParam MultipartFile foodImg,
                               HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -16,6 +16,10 @@
         ORDER BY create_time desc
     </select>
 
+    <select id="queryFoodById" resultMap="rest.food" parameterType="java.lang.Integer">
+        <include refid="querySql"/>
+        where 1=1 AND id = #{id}
+    </select>
     <select id="queryOrder" resultMap="rest.order">
         select ORDER_ID,TABLE_NUMBER , order_state,account_receivable,sell_price
         from food_order
@@ -44,4 +48,9 @@
             AND d.order_id=#{orderId}
         </if>
     </select>
+
+    <select id="queryFoodType" resultMap="rest.foodType">
+        select id,name from food_type
+    </select>
+
 </mapper>
