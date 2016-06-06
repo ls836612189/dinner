@@ -32,9 +32,7 @@ public class LoginFilter implements Filter {
 		Matcher matcher = pattern.matcher(url);
         //request.setAttribute("fid",CoreConstants.getMenuParentId(url));
         // 如果路径中包含 '.'
-        if (url.lastIndexOf(".") > 0) {
-            url = url.substring(0, url.lastIndexOf("."));
-        }
+
         if("/phone".equals(url.substring(0,6))){
             chain.doFilter(request, response);
         }
@@ -44,6 +42,9 @@ public class LoginFilter implements Filter {
         } else {
             // 如果是需要过滤的url 不需要执行下面的代码
             if(exclude.indexOf(url)<0){
+                if (url.lastIndexOf(".") > 0) {
+                    url = url.substring(0, url.lastIndexOf("."));
+                }
                 sysUser = (SysUser) httpServletRequest.getSession().getAttribute(CoreConstants.SESSION_EMP);
                 if (sysUser == null) {
                     // 如果没有登录 重定向到登录页面

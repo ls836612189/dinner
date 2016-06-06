@@ -10,6 +10,8 @@ import com.tj.restaurant.entity.FoodType;
 import com.tj.restaurant.entity.OrderDetail;
 import com.tj.restaurant.entity.OrderEntity;
 import com.tj.restaurant.service.FoodMenuService;
+import com.tj.sys.response.BaseResponse;
+import com.tj.sys.response.EnumResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/4/28.
@@ -40,6 +44,8 @@ public class FoodMenuControl {
     @AutoPage
     public String getFootList(FoodVO queryBean, Model model){
         List<FoodEntity> footList = foodService.queryFoodList(queryBean);
+        List<FoodType> foodTypes = foodService.queryFoodType();
+        model.addAttribute("foodType",foodTypes);
         model.addAttribute("queryBean",queryBean);
         model.addAttribute("pageData",footList);
         return "/food_list";
@@ -50,25 +56,56 @@ public class FoodMenuControl {
         model.addAttribute("foodType",foodTypes);
         return "food_add";
     }
-    @RequestMapping("/food/modifyFood")
+    @RequestMapping("/food/editFood")
     public String modifyFood(Integer id,Model model){
         FoodEntity entity = foodService.queryFoodById(id);
+        List<FoodType> foodTypes = foodService.queryFoodType();
+        model.addAttribute("foodType",foodTypes);
         model.addAttribute("bean",entity);
         return "food_modify";
     }
+    @RequestMapping("/food/foodDelete")
+    @ResponseBody
+    public Object deleteFood(Integer id){
+        try{
+            int count = foodService.deleteFoodById(id);
+            if(count !=  1){
+                return new BaseResponse(EnumResponse.OPTION_FAILURE);
+            }
+        }catch (Exception e){
+            return new BaseResponse(EnumResponse.OPTION_FAILURE);
+        }
+        return new BaseResponse(EnumResponse.OPTION_SUCCESS);
+    }
     @RequestMapping("/food/saveOrUpdateFood")
-    public String saveNewFood(@RequestParam("foodName") String foodName, @RequestParam("foodType") String foodType,
-                              @RequestParam("foodPrice") String foodPrice, @RequestParam MultipartFile foodImg,
-                              HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if(foodImg != null){
+    @ResponseBody
+    public Object saveNewFood(@RequestParam(value = "foodName",required = true) String foodName, @RequestParam(value = "foodType",required = true) String foodType,
+                              @RequestParam(value = "foodPrice",required = true) String foodPrice,@RequestParam(value = "effect",required = false) String effect,
+                              @RequestParam(value = "detail",required = false) String detail,@RequestParam(value = "foodImg",required = false) MultipartFile foodImg,
+                              @RequestParam(value = "id",required = false)String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FoodEntity foodEntity = new FoodEntity();
+//        if(id != null && id != ""){
+//            try{
+//                foodEntity = foodService.queryFoodById(Integer.valueOf(id));
+//            }catch (Exception e){
+//                return new BaseResponse(EnumResponse.OPTION_FAILURE);
+//            }
+//        }else{
+//            foodEntity =
+//        }
+        Map<String,String> map = new HashMap<String,String>();
+
+        if(foodImg != null && !foodImg.isEmpty()){
             // 原始附件的名称
             String originalName = foodImg.getOriginalFilename();
             // 获取文件的后缀名
             String ext = originalName.substring(originalName.lastIndexOf("."));
             // 生成日期名称
-            String fileName = DateUtils.dateToYmdhmsString();
-            String dictPath = CoreConstants.FOODIMGPATH;
-            dictPath = dictPath.replaceAll("/", File.separator);
+            String fileName = DateUtils.dateToYmdhmsString()+ext;
+           // String dictPath = request.getSession().getServletContext().getInitParameter("UPLOAD_IMAGE_PATH");
+            String dictPath = "/home/images/";
+//            String dictPath = CoreConstants.FOODIMGPATH;
+//            dictPath = dictPath.replaceAll("//",File.separator);
             File file = new File(dictPath);
             if(!file.exists() || !file.isDirectory()){
                 file.canWrite();
@@ -78,16 +115,27 @@ public class FoodMenuControl {
             fout.write(foodImg.getBytes());
             fout.flush();
             fout.close();
+            foodEntity.setImgUrl("/foodImg/"+fileName);
 
-            FoodEntity foodEntity = new FoodEntity();
-            foodEntity.setFoodName(foodName);
-            foodEntity.setFoodPrice(Float.parseFloat(foodPrice));
-            foodEntity.setFoodType(Integer.parseInt(foodType));
-            foodEntity.setImgUrl(dictPath+fileName);
-
-            foodService.saveFood(foodEntity);
         }
-        return "/food_list";
+
+        foodEntity.setFoodName(foodName);
+        foodEntity.setFoodPrice(Float.parseFloat(foodPrice));
+        foodEntity.setFoodType(Integer.parseInt(foodType));
+        foodEntity.setEffect(effect);
+        foodEntity.setDetail(detail);
+        try{
+            if(id != null && id != ""){
+                foodEntity.setId(Integer.valueOf(id));
+                foodService.updateFood(foodEntity);
+            }else{
+                foodService.saveFood(foodEntity);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return new BaseResponse(EnumResponse.OPTION_FAILURE);
+        }
+        return new BaseResponse(EnumResponse.OPTION_SUCCESS);
     }
     /*@RequestMapping("/food/foodList")
     @ResponseBody
@@ -147,10 +195,12 @@ public class FoodMenuControl {
         }
 
     }
+    @RequestMapping("/phone/order/commitOrder")
+    @ResponseBody
+    public Response commitOrder(OrderDetail orderDetail){
 
-//    public Response<OrderDetail> saveOrderDetail(FoodVO orderId){
-//
-//    }
+        return new Response(true,"成功");
+    }
 
 
 }

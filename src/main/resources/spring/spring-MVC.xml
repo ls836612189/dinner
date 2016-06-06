@@ -16,7 +16,10 @@
     <!-- 开启注解 -->
     <mvc:annotation-driven />
     <mvc:default-servlet-handler/>
+    <!-- 文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
+    </bean>
     <!--自动分页拦截器设置-->
     <mvc:interceptors>
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->

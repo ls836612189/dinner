@@ -4,4 +4,34 @@
     <insert id="saveOrder" >
         INSERT into order_detail(order_id,food_id,food_count) VALUES (#{order},1,1)
     </insert>
+    <insert id="saveNewFood">
+        INSERT INTO t_tj_food(food_name,sort_id,food_price,food_image,food_detail,food_effect,create_time)
+        VALUES (#{food.foodName},#{food.foodType},#{food.foodPrice},#{food.imgUrl},#{food.detail},#{food.effect},now())
+    </insert>
+    <delete id="deleteFoodById" >
+        DELETE FROM t_tj_food where id = #{foodId}
+    </delete>
+
+    <update id="updateFood">
+        UPDATE t_tj_food SET
+        <if test="food.foodName != null and food.foodName != ''">
+            food_name = #{food.foodName},
+        </if>
+        <if test="food.foodType != null">
+            sort_id = #{food.foodType},
+        </if>
+        <if test="food.foodPrice != null">
+            food_price = #{food.foodPrice},
+        </if>
+        <if test="food.imgUrl != null and food.imgUrl != ''">
+            food_image = #{food.imgUrl},
+        </if>
+        <if test="food.effect != null and food.effect != ''">
+            food_effect = #{food.effect},
+        </if>
+        <if test="food.detail != null and food.detail != ''">
+            food_detail = #{food.detail},
+        </if>
+        create_time = now() where id = #{food.id}
+    </update>
 </mapper>

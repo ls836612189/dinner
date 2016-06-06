@@ -1,0 +1,39 @@
+@charset "utf-8"; 
+html,body{background:#fff;}
+.main_content{min-width:1060px;padding: 0px 12px 10px;}
+.self_select{width: 100%;padding-left: 5px;padding-right: 5px;}
+.emp_txt{height:35px;line-height: 35px;}
+.com_hotresults{background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #D5D5D5;margin: 0;padding: 0;position: relative;text-align: center;z-index: 99998;}
+.com_hotresults .ac_title {background-color: #EEF1F8;border-width: 0;color: #666666;margin: 1px 1px 0;padding: 6px 0 5px 15px;position: relative;text-align: left;z-index: 100;}
+ul.popcitylist {margin-left: 6px;overflow: hidden;}
+.com_hotresults li {cursor: pointer;display: block;float: left;font-size: 12px;height: 25px;line-height: 25px;margin: 0;overflow: hidden;padding: 2px 0 0;text-align: center;vertical-align: middle;}
+ul.popcitylist .openLi {color: #666666;margin: 0 6px;overflow: hidden;text-align: left;width: 55px;}
+.com_hotresults .ac_odd {background-color: #FFFFFF;}
+#form_cities{background-color: #FFFFFF;border-color: #7F9DB9;border-right: 1px solid #7F9DB9;border-style: solid;border-width: 1px;display: none;font-family: Arial;left: 0;padding: 2px;position: absolute;top:55px;width: 100px;}
+#top_cities {border-bottom: 1px dashed #808080;color: #666666;padding: 2px;font-size: 12px;}
+#panel_cities {color: #0055AA;font-family: Arial;height: 149px;}
+.cityline {background-color: #FFFFFF;color: #666666;height: 18px;}
+#panel_cities div {cursor: pointer;margin: 1px 0;padding: 2px;text-align: left;font-size:12px;}
+.citylineover,.cityline:hover{background-color: #C8E3FC;height: 18px;}
+.search01 .citylineover span,.search01 .cityline span{font-size: 12px;}
+.user_invest{margin-bottom: 200px;}
+.search_cnd .as_a{position:relative;top:2px;}
+.as_a1{position:relative;}
+.time_map02 .a_plugCal{left:177px;top:15px;}
+.time_map03 .a_plugCal{left:177px;top:5px;}
+.time_map04 .a_plugCal{left:106px;top:5px;}
+#user_manage{padding-bottom: 100px;}
+.user_operate p a.f20.no_underline{font-family: '宋体'}
+.search_pa{width:242px;}
+.search_pa .thDb_city{left: 153px;top:6px;}
+.CheckList{position: relative;}
+.CheckList .Checked_export{position: absolute;top:-65px;right:-10px;}
+.identitycard li{float: left;padding: 0 12px 0 0;}
+.identitycard li span{display:block;padding-bottom:5px;}
+
+/*schedule_pop*/
+#schedule_pop{display:none;top:300px;right:auto;left:-358px;margin-left:50%;}
+#schedule_pop .a_plugCal{right:auto;left:147px;top:6px;}
+#schedule_pop .body{padding-top: 60px;}
+#protocol01{display: none;}
+#schedule_pop select{font-size:12px;}

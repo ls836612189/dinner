@@ -5,6 +5,7 @@
 <head>
     <title>后台管理系统</title>
     <script src="${ctx}/script/jquery/jquery-1.8.1.min.js"></script>
+    <script src="${ctx}/script/jquery/jquery.form.js"></script>
 </head>
 
 <body>
@@ -25,13 +26,16 @@
 		<col/>
 		<tbody>
 		<tr align="center">
-			<td>菜品名称：
+			<td align="right">菜品名称：
+			</td>
+			<td align="left">
 				<input class="input02" name="foodName" id="foodName"/>
 			</td>
 		</tr>
 		<tr align="center">
-			<td>菜品类型：
-				<select class="input02" name="foodType" id="foodType">
+			<td align="right">菜品类型：</td>
+			<td align="left">
+				<select style="height: 33px;width:230px;" name="foodType" id="foodType">
 					<option value="">请选择</option>
 					<c:forEach var="type" items="${foodType}" >
 						<option value="${type.id}">${type.name}</option>
@@ -40,16 +44,32 @@
 			</td>
 		</tr>
 		<tr align="center">
-			<td>菜品价格：
+			<td align="right">菜品价格：</td>
+			<td align="left">
 				<input class="input02"  name="foodPrice" id="foodPrice"/>
 			</td>
-			<td>示例图片：
+		</tr>
+		<tr align="center">
+			<td align="right">菜品功效：</td>
+			<td align="left">
+				<textarea class="textarea01"id="effect" name="effect" class="myEditor" style="width:230px;height: 80px; overflow-x:visible;overflow-y:visible;" maxlength="1000"></textarea>
+			</td>
+		</tr>
+		<tr align="center">
+			<td align="right">菜品描述：</td>
+			<td align="left">
+				<textarea class="textarea01"id="detail" name="detail" class="myEditor" style="width:230px;height: 80px; overflow-x:visible;overflow-y:visible;" maxlength="1000"></textarea>
+			</td>
+		</tr>
+		<tr align="center">
+			<td align="right">示例图片：</td>
+			<td align="left">
 				<input type="file" class="input02"  name="foodImg" id="foodImg"/>
 			</td>
 		</tr>
 		</tbody>
 	</table>
-	<div class="tc mt10 mb10 pb10 box1094">
+	<div style="margin-left: auto;margin-top: 50px;">
 			<a class="btn btn16 mr10" title="保存" href="javascript:save();">
 				<span class="btn_r btn"><span class="icon14 img"></span>保 存</span>
 			</a>
@@ -58,9 +78,15 @@
 </div>
 </form>
 </div>
-	<script>
+	<script type="text/javascript">
 		function save(){
-			$("#addFoodForm").submit();
+			$("#addFoodForm").ajaxSubmit(function (data){
+				if(data.code == "00000"){
+					window.location.href="${ctx}/food/foodList";
+				}else{
+					alert(data.message);
+				}
+			});
 		}
 	</script>
 <%--/////////内容结束//////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>

@@ -8,12 +8,17 @@
         t_tj_food
     </sql>
     <select id="queryFoodList" resultMap="rest.food">
-        <include refid="querySql"/>
+        select
+        f.id,f.food_name,f.sort_id,f.food_price,f.food_image,f.food_detail,f.food_effect,f.heigh_prize,t.type_name
+        from t_tj_food f LEFT JOIN food_type t ON f.sort_id = t.id
         where 1=1
-        <if test="foodVo.foodName != null">
-            AND food_name = #{foodVo.foodName}
+        <if test="foodVo.foodName != null and foodVo.foodName != ''">
+            AND f.food_name = #{foodVo.foodName}
         </if>
-        ORDER BY create_time desc
+        <if test="foodVo.foodType != null and foodVo.foodType != ''">
+            AND f.sort_id = #{foodVo.foodType}
+        </if>
+        ORDER BY f.create_time desc
     </select>
 
     <select id="queryFoodById" resultMap="rest.food" parameterType="java.lang.Integer">
@@ -50,7 +55,7 @@
     </select>
 
     <select id="queryFoodType" resultMap="rest.foodType">
-        select id,name from food_type
+        select id,type_name from food_type
     </select>
 
 </mapper>

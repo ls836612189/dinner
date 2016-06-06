@@ -33,15 +33,16 @@ public class FoodMenuService {
     public FoodEntity queryFoodById(Integer id){
         return foodReader.queryFoodById(id);
     }
+    public int deleteFoodById(Integer id){
+        return foodWriter.deleteFoodById(id);
+    }
     public void saveFood(FoodEntity entity){
-        try {
-            foodWriter.save(entity);
-        }catch (Exception e){
-            LOGGER.error("=======saveFood======插入异常!"+e.getMessage());
-        }
-
+        foodWriter.saveNewFood(entity);
     }
 
+    public int updateFood(FoodEntity entity){
+        return foodWriter.updateFood(entity);
+    }
 
     public List<OrderEntity> queryOrder(){
 

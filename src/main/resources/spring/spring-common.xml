@@ -53,4 +53,5 @@
         <property name="configLocation" value="classpath:cache/ehcache-local.xml" />
     </bean>
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
 </beans>

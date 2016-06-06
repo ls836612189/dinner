@@ -7,11 +7,20 @@ public class FoodEntity {
     private int id;
     private String foodName;
     private int foodType;
+    private String foodTypeName;
     private float foodPrice;
     private String imgUrl;
     private String effect;
     private String detail;
     private int prize;
+
+    public String getFoodTypeName() {
+        return foodTypeName;
+    }
+
+    public void setFoodTypeName(String foodTypeName) {
+        this.foodTypeName = foodTypeName;
+    }
 
     public String getEffect() {
         return effect;

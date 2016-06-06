@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class CoreConstants {
     public static final String USER_HOME = "/";
-    public static final String FOODIMGPATH="E:/TJfiles/";
+    public static final String FOODIMGPATH="E://TJfiles/";
     public static final String VERIFYING_CODE_KEY = "VERIFYING_CODE_KEY";
     public static final String SESSION_EMP = "emp_session";
     public static final String SESSION_MENU = "session_menu";
@@ -28,7 +28,7 @@ public class CoreConstants {
     public static final String CACHE_FUNC_MAP = "funcMap";
 
 
-    public static final String EXCLUDE_DIRECTORY_REGEX="^/css/|^/images/|^/js/|^/images/|^/script/|^/img/";
+    public static final String EXCLUDE_DIRECTORY_REGEX="^/css/|^/images/|^/js/|^/images/|^/script/|^/img/|^/foodImg/";
     public static final String EXCLUDE_URL_INIT="exclude";
 
     public static long getMenuParentId(String url) {

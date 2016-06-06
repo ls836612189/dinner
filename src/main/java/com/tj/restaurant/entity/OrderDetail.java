@@ -9,8 +9,9 @@ public class OrderDetail {
     private int id;
     private int tableNum;
     private int personNum;
-    private int account;
+    private float account;
     private int foodCount;
+    private float realAccount;
     private List<FoodDetail> foodList;
 
     public int getId() {
@@ -37,12 +38,20 @@ public class OrderDetail {
         this.personNum = personNum;
     }
 
-    public int getAccount() {
+    public float getAccount() {
         return account;
     }
 
-    public void setAccount(int account) {
+    public void setAccount(float account) {
         this.account = account;
+    }
+
+    public float getRealAccount() {
+        return realAccount;
+    }
+
+    public void setRealAccount(float realAccount) {
+        this.realAccount = realAccount;
     }
 
     public int getFoodCount() {

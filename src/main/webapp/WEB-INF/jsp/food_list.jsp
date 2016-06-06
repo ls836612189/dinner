@@ -8,6 +8,20 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	function getSelectState(selectId, optionValue) {
+		var sel = document.getElementById(selectId);
+		for (var i = 0; i < sel.length; i++) {
+			if (sel.options[i].value == optionValue) {
+				sel.selectedIndex = i;
+				break;
+			}
+		}
+	}
+	$(document).ready(function () {
+		getSelectState("foodTT",$("#hiddenFootType").val());
+	});
+</script>
 <div class="main client" id="client_control" role="main">
 <%--//////////标题/////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <div class="title clearfix">
@@ -24,14 +38,11 @@
 	    </li>
 		<li class="fl mr45"><span class="pr5">类型:</span>
 			<input type="hidden" id="hiddenFootType" value="${queryBean.foodType}"/>
-			<select id="foodType" name="foodType">
+			<select id="foodTT" name="foodType" style="height: 33px;width:230px;" >
 				<option value="">请选择</option>
-				<option value="1">冷盘</option>
-				<option value="2">热荤</option>
-				<option value="3">素菜</option>
-				<option value="4">汤菜</option>
-				<option value="5">主食</option>
-				<option value="6">饮料</option>
+				<c:forEach var="type" items="${foodType}" >
+					<option value="${type.id}">${type.name}</option>
+				</c:forEach>
 			</select>
 		</li>
 		<li class="fl">
@@ -67,19 +78,12 @@
 			<tr>
 				<td>${status.index+1}</td>
 				<td>${temp.foodName}</td>
-				<td>
-					<c:if test="${temp.foodType == 1}">冷盘</c:if>
-					<c:if test="${temp.foodType == 2}">熱荤</c:if>
-					<c:if test="${temp.foodType == 3}">素菜</c:if>
-					<c:if test="${temp.foodType == 4}">汤菜</c:if>
-					<c:if test="${temp.foodType == 5}">主食</c:if>
-					<c:if test="${temp.foodType == 6}">饮料</c:if>
-				</td>
+				<td>${temp.foodTypeName}</td>
 				<td>${temp.foodPrice}</td>
 				<td>
-					<a id = "check" href="${ctx}/food/imageDetail">图片</a>
-					<a id = "edit" href="${ctx}/food/foodEdit">编辑</a>
-					<a id = "delete" href="${ctx}/food/foodDelete">删除</a>
+					<a id = "check" href="javascript:void(0);" onclick="showImg('${ctx}${temp.imgUrl}')">图片</a>
+					<a id = "edit" href="${ctx}/food/editFood?id=${temp.id}">编辑</a>
+					<a id = "delete" href="javascript:void(0);" onclick="deleteFood(${temp.id})">删除</a>
 				</td>
 			</tr>
 		</c:forEach>
@@ -102,20 +106,27 @@
 </div>
 <%--/////////内容结束//////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 	<script type="text/javascript">
-		$(function () {
-			getSelectState("footType",$("#hiddenFootType").val());
-		});
-		function getSelectState(selectId, optionValue) {
-			var sel = document.getElementById(selectId);
-			for (var i = 0; i < sel.length; i++) {
-				if (sel.options[i].value == optionValue) {
-					sel.selectedIndex = i;
-					break;
-				}
-			}
-		}
 		function search(){
 			$("#foodListForm").submit();
+		}
+		function deleteFood(id){
+			if(confirm("确定需要删除此菜品")){
+				$.post("${ctx}/food/foodDelete",{"id":id},function(result){
+					if(result.code == "00000"){
+						$("#foodListForm").submit();
+					}else{
+						alert(result.message);
+					}
+				},"json");
+			}
+		}
+
+		function showImg(img){
+			if (img == null || img ==''){
+				alert("没有该图片");
+				return ;
+			}
+			window.showModalDialog(img,null,"dialogHeight:500px;dialogWidth:600px;resizable:yes;");
 		}
 	</script>
 </div>
