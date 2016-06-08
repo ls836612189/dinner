@@ -34,4 +34,23 @@
         </if>
         create_time = now() where id = #{food.id}
     </update>
+
+    <insert id="saveCommitOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO food_order(table_number,person_number,account_receivable,foods_count)
+        VALUES (#{order.tableNum},#{order.personNum},#{order.account},#{order.foodCount})
+    </insert>
+    <insert id="saveCommitFoodList">
+        INSERT INTO order_detail(id,order_id,food_id,food_name,food_price,food_count)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.id},#{orderId},#{item.foodId},#{item.name},#{item.price},#{item.foodCount})
+        </foreach>
+    </insert>
+
+    <delete id="removeOldOrder">
+        DELETE from food_order WHERE order_id = #{orderId}
+    </delete>
+    <delete id="removeOldDetail">
+        DELETE from order_detail WHERE order_id = #{orderId}
+    </delete>
 </mapper>

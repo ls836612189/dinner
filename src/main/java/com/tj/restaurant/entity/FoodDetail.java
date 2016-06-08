@@ -8,6 +8,8 @@ public class FoodDetail {
     private String name;
     private float price;
     private int foodCount;
+    private int foodId;
+    private int orderId;
 
     public int getId() {
         return id;
@@ -39,5 +41,21 @@ public class FoodDetail {
 
     public void setFoodCount(int foodCount) {
         this.foodCount = foodCount;
+    }
+
+    public int getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(int foodId) {
+        this.foodId = foodId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 }

@@ -67,4 +67,15 @@ public class FoodMenuService {
     public List<FoodType> queryFoodType(){
         return foodReader.queryFoodType();
     }
+
+    public int saveCommitOrder(OrderDetail orderDetail){
+        return foodWriter.saveCommitOrder(orderDetail);
+    }
+
+    public void saveCommitFoodList(List<FoodDetail> list,int orderId){
+        foodWriter.saveCommitFoodList(list,orderId);
+    }
+    public void removeOldOrder(int orderId){
+        foodWriter.removeOldOrder(orderId);
+    }
 }

@@ -198,7 +198,15 @@ public class FoodMenuControl {
     @RequestMapping("/phone/order/commitOrder")
     @ResponseBody
     public Response commitOrder(OrderDetail orderDetail){
-
+        if(orderDetail.getId() != 0){
+            foodService.removeOldOrder(orderDetail.getId());
+        }
+        // 新订单
+        int i = foodService.saveCommitOrder(orderDetail);
+        if(i ==1){
+            int orderId = orderDetail.getId();
+            foodService.saveCommitFoodList(orderDetail.getFoodList(),orderId);
+        }
         return new Response(true,"成功");
     }
 
